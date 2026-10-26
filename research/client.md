@@ -24,4 +24,5 @@ and subsystem notes. Login protocol lives in `servers\client-log-protocol.md`; m
 - `client/rendering/directdraw.md` - DirectDraw 7 surfaces, pixel formats, flip, lost surfaces; read before porting presentation.
 - `client/rendering/blitters.md` - every Put* blit, blend tables, .pak read/skip vs PAKLib, helper DLLs; read before reproducing pixel output.
 - `client/rendering/frame-pipeline.md` - per-frame order, draw layering, night/weather, timing; read when ordering draws.
+- `client/rendering/effect-transparency.md` - why effects are additive on black, what the colour key does for them, why re-keying them fails; read before editing, re-keying or porting effect sprites.
 - `client/rendering/porting-notes.md` - what a modern port must replicate, can drop, and the rendering bugs; read before starting a port.
