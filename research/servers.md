@@ -38,6 +38,9 @@ Source abbreviations and the verified/inferred convention are defined in `server
   source); read when writing code from the official behaviour.
 - `servers/version-diff.md` - 2.03 vs 2.20 (and gate 2.19 vs 2.20) protocol differences; read
   when targeting a version other than 2.20.
+- `servers/database.md` - the SQL Server databases behind the official DB-mode Log servers (3.51-era evidence):
+  connection, account schema, character tables, war-result procedures, every query found; read when serving a
+  DB-mode game server or designing storage.
 - `servers/persistence.md` - what the Log server must store, the verified character text-file
   format, the proposed account and guild files, folder layout, plaintext passwords; read
   before designing storage.
