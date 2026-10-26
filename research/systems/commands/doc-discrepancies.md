@@ -1,0 +1,16 @@
+# Doc discrepancies (source wins)
+
+Places where existing research docs disagree with the 2.20 source as read for this catalogue. Nothing was edited in those docs. S = `sources/hgserver-librehelbreath/src/`.
+
+| Doc | Claim | Source says |
+|---|---|---|
+| task brief / `research/game-server.md` | 2.20 server at `sources/hgserver-librehelbreath` vs `.claude/scratch/srv220/` | both are the same 2.20 export, identical line numbers; only Game.cpp:48960 differs (a `static_cast<int32_t>` added in the repo copy) |
+| `shared/messages/game-log.md` rows for `DEF_COMMONTYPE_REQ_TRAINSKILL`, `REQ_GETOCCUPYFLAG`, `REQUEST_HELP`, `BANGUILD`, `DEF_NOTIFY_HELP`, `HELPFAILED`, `MSGID_ADMINUSER`, `MSGID_MANAGER_SHUTDOWN` | link "guess: Log link" | these are client-link commands handled in `ClientCommonHandler` / the client branch of `MsgProcess` (S Game.cpp:14966-15088) or notifies to clients; they look server-only because the client never sends or receives them (dead or never sent), not because they go to the Log server |
+| `shared/messages/client-game.md` row `DEF_NOTIFY_SUCCESSBANGUILDMAN` | "used in client and game server" | the single server use is `SendNotifyMsg(..., DEF_NOTIFY_SUCCESSBANGUILDMAN, ...)` (S Game.cpp:36782) and SendNotifyMsg has no case for it, so nothing is sent ([COMMANDS-005](../../issues/commands.md#commands-005-banguild-and-successbanguildman-are-passed-to-sendnotifymsg-which-has-no-case)) |
+| `shared/messages/client-game.md` row `DEF_NOTIFY_CHARISMA` (also CANNOTJOINMOREGUILDSMAN, LIMITEDLEVEL) | "used in client and game server" | server side is only the packing `case` in SendNotifyMsg (S Game.cpp:18906 etc.); no call sends it ([COMMANDS-009](../../issues/commands.md#commands-009-cannotjoinmoreguildsman-limitedlevel-and-charisma-notifies-are-never-sent)) |
+| `shared/messages/client-game.md` row `DEF_COMMONTYPE_CLEARGUILDNAME` | parent `MSGID_COMMAND_COMMON` (header order) | sent only as `MSGID_EVENT_COMMON` (S Game.cpp:16779, 19078, 19149, 36789); value collides with REQ_GETOCCUPYFIGHTZONETICKET |
+| `game-server/functions/guild-party.md` UserCommand_BanGuildsman | notifies include DEF_NOTIFY_SUCCESSBANGUILDMAN; types include DEF_COMMONTYPE_BANGUILD | both are passed to SendNotifyMsg and silently dropped (S Game.cpp:36782, 36785; [COMMANDS-005](../../issues/commands.md#commands-005-banguild-and-successbanguildman-are-passed-to-sendnotifymsg-which-has-no-case)) |
+| `game-server/functions/crusade-quests.md` RequestHelpHandler | notifies HELP / HELPFAILED | sent, but the 2.20 client has no NotifyMsgHandler case for either and never sends REQUEST_HELP ([COMMANDS-004](../../issues/commands.md#commands-004-request_help-and-its-helphelpfailed-replies-are-unreachable)) |
+| `shared/messages/README.md` link rules | client-only names go to client-log | the client never checks `MSGID_RESPONSE_LOG` etc.: `LogRecvMsgHandler` (C Game.cpp:15451) passes every Log reply to `LogResponseHandler`, which switches on the sub-type only; the MSGIDs are implicit, not unused |
+
+No disagreement found with `game-server/functions/chat-gm.md` (it gives no admin levels; `/polymorph` "not implemented" and `RequestAdminUserMode` "empty" match the source) or with `game-server/build-config.md` / `mechanics.md` on `/who` level 3 under DEF_CHINESE and the two GM passwords.

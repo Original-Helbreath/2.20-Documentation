@@ -1,0 +1,14 @@
+# resolution (index)
+- `resolution/window-setup.md` - how the window, DirectDraw mode, surfaces, clipping, pitch and mouse depend on 640x480, plus the server-imposed view limit; read first, before any resolution work.
+- `resolution/variables.md` - the proposed variable set (SCREEN_W/H, VIEW_*, HUD_*, CHAT_*, DLG_*, MENU_*, SRV_WIN_*) with formulas and 640x480 values; read before replacing any literal.
+- `resolution/change-plan.md` - scale vs enlarge decision, phase order with row counts and risk, riskiest areas, bugs found; read before planning or estimating the change.
+- `resolution/method.md` - enumeration scope, regex families with line counts, class totals, build conditionals (live lines per build), known limits; read to re-run or audit completeness.
+- `resolution/values-platform.md` - every DirectDraw/window/input/buffer row (SCREEN, BUFFER); read when changing display mode, surfaces or mouse clamp.
+- `resolution/values-screen-game.md` - full-screen rectangles in game code (shadow boxes, top bar, line clip); read when changing full-screen drawing.
+- `resolution/values-world-view.md` - every world-view row (loops, centre tile, listener, picking, weather, server window); read when changing what part of the world is drawn.
+- `resolution/values-hud.md` - icon/gauge panel, chat bar and event-list rows; read when re-anchoring the HUD.
+- `resolution/values-dialogs.md` - dialog default table with proposed anchors, runtime placement and clamps; read when re-anchoring dialogs.
+- `resolution/values-menus.md` - per-function summary of the 640x480 menu canvases; read when offsetting menus.
+- `resolution/values-menus-lines.md` - every menu row (large); read only to find one screen's literals.
+- `resolution/coincidental.md` - grouped look-alike numbers that must not change; read before any search-and-replace.
+- `resolution/coincidental-lines.md` - every COINC, false-positive and pitch-correct row (large); read only to check one line.
